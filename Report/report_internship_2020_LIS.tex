@@ -1,0 +1,74 @@
+\documentclass[12pt, a4paper]{report}
+\usepackage[utf8]{inputenc}
+%\usepackage[scaled]{helvet}
+%\renewcommand*\familydefault{\sfdefault}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage[svgnames]{xcolor}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{sectsty}
+
+
+% Permet de changer la numérotation de la documentclass pour les sections
+\renewcommand{\thesection}{\arabic{section}}
+
+% Définition des listes
+\frenchbsetup{StandardLists=true}
+\setitemize{font=\color{SeaGreen}}
+
+% Définition des marges (paquets geometry)
+\geometry{margin=2.5cm, vmargin=2.5cm}
+
+% Définition de l'indentation
+\setlength{\parindent}{0cm}
+
+% Couleur des sections et sous-sections
+\sectionfont{\color{blue}}
+\subsectionfont{\color{blue}}
+
+\title{\color{blue}Internship Report: Protocol verification}
+\author{Romain Soumard}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+Coming...
+
+\section{Organisation presentation}
+
+Coming...
+
+\section{Study of the properties of protocols}
+
+\subsection{Preparations}
+
+In computer science, verification refers to a discipline that uses formal methods to study the properties of systems and check whether they fullfill certain specifications.
+
+During the course of this semester, I was assigned with the study of the protocols used in the belenios system. Belenios is an electronic vote sytem which was developed by the researchers from INRIA (\color{red} préciser l'acronyme\color{black}). Before being able to take care of the task at hand, I  had to learn the tools used in this field of research.
+
+Throughout my studies and researches, I have learnt the existence of several mathematical and logical abstract tools, techniques and properties:
+\begin{itemize}
+\item The use of cryptographic primitives, modeled by an equational theory
+\item Process algebras (or process calculi), use to model concurrent systems, especially, applied Pi-calculus.
+\item The use of prooftrees.
+\end{itemize}
+
+These tools allow us to prove a wide array of protocol properties, such as deducibility and authentifcation. You can, for example, use cryptographic primitives and pi-calculus to prove the property of authentification, or use prooftrees to prove deducibility, which is intuitively a property that refers to the ability to deduce a term from a set of terms. 
+
+\section{Conclusion}
+
+Coming...
+
+\section{bibliography}
+
+
+Coming...
+\end{document}
