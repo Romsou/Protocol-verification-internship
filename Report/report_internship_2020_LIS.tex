@@ -46,22 +46,65 @@ Coming...
 
 Coming...
 
-\section{Study of the properties of protocols}
+\section{The study case of Belenios}
 
-\subsection{Preparations}
+\subsection{Description of Belenios}
 
-In computer science, verification refers to a discipline that uses formal methods to study the properties of systems and check whether they fullfill certain specifications.
+Part of my intership consisted in studying the case of the Belenios system.
+Belenios is both the name of the electronic voting system and the name of the protocol used by it.
+It is mainly developed by Stéphane Glondu since 2012, and was proven to respect several security protocols properties.
 
-During the course of this semester, I was assigned with the study of the protocols used in the belenios system. Belenios is an electronic vote sytem which was developed by the researchers from INRIA (\color{red} préciser l'acronyme\color{black}). Before being able to take care of the task at hand, I  had to learn the tools used in this field of research.
+Before we dig deeper into the functionning of the system, we'll first have to define several notions related to the study of security protocols, such as privacy and verifiability.
+We'll then study a use case of Belenios and try to determine whether or not this system would be suited to administer an election at university level.
 
-Throughout my studies and researches, I have learnt the existence of several mathematical and logical abstract tools, techniques and properties:
+\subsection{Brief introduction to security protocol glossary}
+
+Before we can analyse the properties of Belenios, we need to define a few terms.
+
+By looking at the website and the related research and specifications papers, the security protocol used by Belenios is said to respect several properties:
+
 \begin{itemize}
-\item The use of cryptographic primitives, modeled by an equational theory
-\item Process algebras (or process calculi), use to model concurrent systems, especially, applied Pi-calculus.
-\item The use of prooftrees.
+\item \textbf{Privacy:} In the context of voting systems, privacy refers to the inability of 
+someone to know how you voted.
+
+\item \textbf{Strong verifiability:} The notion of verifiability is still debated, however, in the 
+context of Belenios, a voting system is said strongly verifiable is the result of the election reflects:
+
+	\begin{itemize}
+	\item All the votes of the honest voters who checked their votes
+	\item Some of the votes of the honest voters who did not checked their votes
+	\item If $k$ additionnal voters were involved in the election, then at most $k$ additionnal votes
+	\end{itemize}
+	
+\item \textbf{Authentification: } Intuitively, authentification is the act of proving an assertion.
+For example, providing your credential and your password can be a way to prove your identity.
+
+\item \textbf{Cryptographic primitves:} Intuitively, cryptographic primitives are basic functions 
+that are used as the base brick to build several security protocols. They allow us, for example, to
+encrypt or decrypt data, using asymetric or symectric encryption.
+
+\item \textbf{Pi-Calculus:} Pi calculus is a process algebra used to modelize concurrent systems and
+their interactions. It is especially useful in the case of security protocol study, since, with
+cryptographic primitives, it allows us to modelize protocols efficiently with an abstract tool.
+
 \end{itemize}
 
-These tools allow us to prove a wide array of protocol properties, such as deducibility and authentifcation. You can, for example, use cryptographic primitives and pi-calculus to prove the property of authentification, or use prooftrees to prove deducibility, which is intuitively a property that refers to the ability to deduce a term from a set of terms. 
+\subsection{Organization of an election}
+
+Now that we defined a few terms, we are first going to study the way an election works, then we'll dive at a deeper level and study the protocol used in Belenios itself.
+
+An election organized with Belenios consists in up to three entities:
+\begin{itemize}
+\item The voters, who are provided with a credential and password, allowing them to authentificate
+to the election server so they can vote.
+\item The election server, which is responsible with administering the election.
+\item Optionnaly, a registrar authority which can generate and send the credentials to the voters 
+instead of the election server.
+\end{itemize}
+
+A lot of the proofs on Belenios are based on the presence of a registrar authority, which we'll analyze later.
+
+
 
 \section{Conclusion}
 
