@@ -164,8 +164,8 @@ Belenios make mostly use of four of them:
 
 \subsection{Proof methods}
 
-In order to prove the strong verifiability and the privacy of Belenios, the research team used an interactive theorem prover called EasyCrypt, which supports the writing cryptographic proofs.
-This allowed them to yield the first machine-checked analysis of ballot privacy and strong vverifiability on a deployed electronic voting protocol.
+In order to prove the strong verifiability and the privacy of Belenios, the research team used an interactive theorem prover called EasyCrypt, which supports the writing of cryptographic proofs.
+This allowed them to yield the first machine-checked analysis of ballot privacy and strong vverifiability on a deployed electronic voting protocol (To their knowledge at the least.). For all of the properties proved, \textbf{the team had to create a formal definition by creating several formal security experiments.} Since my time was limited, I could not try EasyCrypt myself however.
 
 To establish privacy, the research team made the distinction between three aspects that impact the privacy of individual votes:
 
@@ -175,9 +175,23 @@ To establish privacy, the research team made the distinction between three aspec
 \item Strong consistency
 \end{itemize}
 
-\subsubsection{Ballot privacy}
+\textbf{Ballot privacy} guarantees that ballot themselves do not reveal any information on the vote cast. Like most proofs I found in the papers, the idea behind the formal definition relies on the simulation of an adversary who is going to try to corrupt a part of the users. In the security experiment, the user gets the credentials of a part of the users. The proof makes use of an oracle for the vote. In the security experiment scenario created by the team, an adversary forces an honest id to challenge the oracle. To procude its proof, this oracle has to cast a vote. At this moment, the adversary corrupts the id and cast the vote on behalf of the honest voter.\\
 
+\textbf{Strong correctness} guarantee that an honestly generated ballot will not be rejected by a ballot validation algorithm. Since the original definition of the notion is too strong to hold in a system with a registrat authority, the team decided to use a weaker version of it. To win, an adversary must, after having seen the list of credentials, choose an id, a vote and outputs a bulletin board. The adversary wins if for such a bord the honest vote for id wins.\\ 
 
+\textbf{Strong consistency} requires that for any adversially produced bulletin board for which each individual ballot is valid, the value provided by the alorithm responsible of the tally is correct.
+To prove strong consistency, the team requires the definition of several algorithm which I am not going to detail here for simplicity sake. The idea behind the proof here is that the adversary is allowed to register a set of identities and then, with honestly generated keys for the election, generates a bulletin board that fakes the result of the tally if it tallied indivdually each vote.\\
+
+To establish \textbf{Verifiability}, the team used the notion of strong verifiability already introduced in Helios-C. This notion takes into account the universal, individual and eligibility verifiability properties. They used tow different security experiments and scenarios to define verifiability:
+
+\begin{itemize}
+\item \textbf{Verifiability against a dishonnest ballot box}
+\item \textbf{Verifiability against a dishonnest registrar}
+\end{itemize} 
+
+For the first scenario, the adversary takes entire control of the ballot box and can manipulate the votes in the box. It can require a voter to vote and retire his vote from the ballot box afterwards. The adversary can then manipulate the bulletin board to make the voter believe his vote was taken into consideration. It is important to note that ballot stuffing is not possible in this scenario or the next.\\
+
+For the second scenario, the security experiment is quite similar, except that the adversary does not have the control of the ballot box but can generate credentials the way he see fit. 
 
 \subsection{The organisation of an election}
 
