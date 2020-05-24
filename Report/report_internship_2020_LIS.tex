@@ -11,6 +11,8 @@
 \usepackage{algpseudocode}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{float}
 \usepackage{sectsty}
 
 
@@ -40,69 +42,198 @@
 
 \section{Introduction}
 
-Coming...
+The present document is an internship report redacted during my last undergraduate year at the university of aix-Marseille from april to june 2020.\\ 
 
-\section{Organisation presentation}
+I already realized another intership in the Calculus division, in the COALA (Constraint, Algorithms and Applications) team, responsible for working, among other things, on CSPs (constraint satisfaction problems). This time, I realized my internship in the MOVE (Modelisattion and verification) team to see a more security focused theme of research.\\
 
-Coming...
+During the course of my internship I was tasked with learning the basics of cryptograhpic protocols and study a real use case in the belenios voting system.
+In this document, you will find a presentation of the organisation in which I realized my internship, the LIS (laboratoire d'informatique et systèmes, french for computer science and systems laboratory.), a brief overview of cryptographic protocols, their properties, and the tools used to study and elaborate them.
+
+Finally, I will answer the question I was asked during my internship, which is:\\
+
+\begin{center}
+\textbf{Is belenios suitable to administer a vote about\\ internships at university level ?}
+
+\end{center}
+ 
+
+\section{The Computer Science and System Laboratory (LIS)}
+
+\subsection{Presentation}
+
+The LIS is a Mixt Unit Of research (Unité Mixte de Recherche, UMR in french.), under the administrative supervision of the CNRS (Centre Nationale de Recherche, National Research Center.) which is split on different sites.
+Two of those sites are located in Marseille, at Luminy and Saint-jérôme, and one is located in Toulon.
+The LIS is actually linked with the universities of Toulon and Aix-Marseille and a lot of their members are actually teachers at those places.
+The researches led in the laboratory find several applications in different domains, such as energy, transport and healh, and the laboratory itself has an important contractual activity.
+
+\subsection{structure}
+
+\begin{figure}[H]
+\includegraphics[width=\linewidth]{structure-lis.png}]
+\caption{LIS's Structure}
+\label{Lis organisation}
+\end{figure}
+
+The laboratory is divided into 4 divisions:
+\begin{itemize}
+\item Calculus
+\item Data Science
+\item Signal and Image
+\item Systems analysis and control
+\end{itemize}
+
+All of which are further divided in several teams such as COALA and MOVE as mentioned earlier.
+Among the researches led by those different divisions, there is artificial intelligence, simulation and modelisation, data bases, machine learning, image treatment and signal and so on.
+
+
+\section{Internship subject}
+
+As mentioned earlier,my internship subject consisted in studying the cryptographic protocols used in e-voting systems. All electronic voting systems that have been in used achieved varying degrees of security based on the protocol they use and implement. The use of those systems is especially interesting from a political and economical standpoint. In the following sections, I'll present Belenios, an electronic voting system and protocol developed by a team of researcher from the INRIA (Institut National de Recherche en Informatique et en Automatique, Computer Science and Automation National Research Institute.).
 
 \section{The study case of Belenios}
 
 \subsection{Description of Belenios}
 
+\begin{figure}[H]
+\centering
+\includegraphics[]{logo-belenios-menu.png}
+%\caption{Logo Belenios}
+\end{figure}
+
+
 Part of my intership consisted in studying the case of the Belenios system.
 Belenios is both the name of the electronic voting system and the name of the protocol used by it.
-It is mainly developed by Stéphane Glondu since 2012, and was proven to respect several security protocols properties.
+It is mainly developed by Stéphane Glondu since 2012, and was proven by Dr Véronique Cortier her team to respect several security protocols properties.
 
-Before we dig deeper into the functionning of the system, we'll first have to define several notions related to the study of security protocols, such as privacy and verifiability.
-We'll then study a use case of Belenios and try to determine whether or not this system would be suited to administer an election at university level.
 
-\subsection{Brief introduction to security protocol glossary}
+\subsection{Structure of the Belenios system}
 
-Before we can analyse the properties of Belenios, we need to define a few terms.
+To run an election with Belenios, one can use the online voting platform at disposal on belenios.loria.fr. However, for the sake of studying Belenios, I installed it from the sources and delved into the research papers to learn more about the underlying structure.
+
+An election relying on Belenios can have several configurations. The one that is mostly represented in the specification and research papers relies on 4 distinct entities:
 
 \begin{itemize}
-\item \textbf{Privacy:} In the context of voting systems, privacy refers to the inability of 
-someone to know how you voted.
+\item A registrar authority, tasked with providing the signing keys. Once the signing key is generated, it sends it to the proper voter and to the election server.
 
-\item \textbf{Strong verifiability:} The notion of verifiability is still debated, however, in the 
-context of Belenios, a voting system is said strongly verifiable is the result of the election reflects:
+\item The voting server, which is in charge of maintaining the bulletin board, and, by default also generate the credentials itself, in which case, the security properties guaranteed by Belenios are weaker, though organizing the election gets more simple.
 
-	\begin{itemize}
-	\item All the votes of the honest voters who checked their votes
-	\item Some of the votes of the honest voters who did not checked their votes
-	\item If $k$ additionnal voters were involved in the election, then at most $k$ additionnal votes
-	\end{itemize}
-	
-\item \textbf{Authentification: } Intuitively, authentification is the act of proving an assertion.
-For example, providing your credential and your password can be a way to prove your identity.
+\item The voters, and, by extension, their voting device. The voters select their vote, and their device encrypt it, sign it for them, and send it to the voting server.
 
-\item \textbf{Cryptographic primitves:} Intuitively, cryptographic primitives are basic functions 
-that are used as the base brick to build several security protocols. They allow us, for example, to
-encrypt or decrypt data, using asymetric or symectric encryption.
+\item The decryption trustees. Among a set of $m$ trustees, $t + 1$ of them are need to decrypt the result of the election. The multiplication of the trustees allow for more neutrality during the tally in particular.
+ \end{itemize}
 
-\item \textbf{Pi-Calculus:} Pi calculus is a process algebra used to modelize concurrent systems and
-their interactions. It is especially useful in the case of security protocol study, since, with
-cryptographic primitives, it allows us to modelize protocols efficiently with an abstract tool.
+Depending on the configuration, the structure as well as the properties guaranteed by Belenios change. Most of the proofs presented in the research papers relies on the above structure with four distinct entities, and the idea that the voting server and registrar are not both dishonnest at the same time.
+
+
+\subsection{Properties of Belenios}
+
+Belenios is built upon another existing protocol named Helios. Hence, it offers the same guarantees. Its main difference is that it prevents ballot stuffing.\\
+
+The main security properties guaranteed by Helios are:
+
+\begin{itemize}
+
+\item \textbf{Privacy:} In the context of voting systems, privacy refers to the inability of someone to know how you voted.
+
+\item \textbf{Strong verifiability}: Strong verifiability can be divided into two sub-properties:
+\begin{itemize}
+	\item \textbf{Individual verifiability:} A voter can check that his vote has been properly 													  counted
+	\item \textbf{Universal verifiability:} Everyone can check that the results correspond to the 												 ballots on the public board.
+\end{itemize}
 
 \end{itemize}
 
-\subsection{Organization of an election}
+in order to insure those properties, Belenios uses several cryptographic primitive to build its protocol, which we are going to see in the next section. 
 
-Now that we defined a few terms, we are first going to study the way an election works, then we'll dive at a deeper level and study the protocol used in Belenios itself.
 
-An election organized with Belenios consists in up to three entities:
+\subsection{Cryptographic primitives}
+
+Cryptographic primitives, as their name suggests, offer the basic functions with which are built cryptographic protocols.
+
+Belenios make mostly use of four of them:
+
 \begin{itemize}
-\item The voters, who are provided with a credential and password, allowing them to authentificate
-to the election server so they can vote.
-\item The election server, which is responsible with administering the election.
-\item Optionnaly, a registrar authority which can generate and send the credentials to the voters 
-instead of the election server.
+\item \textbf{Encryption:} Belenios uses the El Gamal encryption system, which is an assymetric key encryption algorithm relying, as a lot of encryption algorithm, on group theory.
+
+\item \textbf{Hash function:} An hash function used to generate an hash from a message. Belenios uses a tag system to make the hash context-dependent and avoir hash collision.
+
+\item \textbf{Signature:} In Belenios, voters use a Schnorr signature to sign their encrypted ballot before sending it to the voting server. This mecanism helps to prevent ballot stuffing. Indeed, the voting server knows the signing keys, which can be used to authentify an honest voter from a dishonest one.
+
+\item \textbf{Zero-knowledge proof:} Belenios uses the Fiat-Shamir technique to provide non-interactive zero-knowledge proofs several times. One of them is to prove that voters encrypted a valid vote (what valid  means is context dependant here.). Another one is to prove the decryption trustees correctly decrypted the result of the election. 
 \end{itemize}
 
-A lot of the proofs on Belenios are based on the presence of a registrar authority, which we'll analyze later.
+\subsection{Proof methods}
+
+In order to prove the strong verifiability and the privacy of Belenios, the research team used an interactive theorem prover called EasyCrypt, which supports the writing cryptographic proofs.
+This allowed them to yield the first machine-checked analysis of ballot privacy and strong vverifiability on a deployed electronic voting protocol.
+
+To establish privacy, the research team made the distinction between three aspects that impact the privacy of individual votes:
+
+\begin{itemize}
+\item Ballot privacy
+\item Strong correctness
+\item Strong consistency
+\end{itemize}
+
+\subsubsection{Ballot privacy}
 
 
+
+\subsection{The organisation of an election}
+
+Now that we defined the entities and the cryptographic primitives used in Belenios, we're going to describe how an election is organized using it with the default configuration.\\
+
+This example relies on the presence of 3 entities: the registrar, the voting server and the voters. We'll discuss other potential configurations and their influence on the system security and simplicity later.
+
+\subsubsection{Credential generation}
+
+During the first step, the voting server generates and send credentials to the voters, while the registrar generates signing keys and sends them privately to the voters and to the voting server. This allows the voters to sign their vote. With a zero-knowledge proof (see cryptographic primitives section), and the signature key, the voting server is then able to know whether a  vote is honest.  
+
+\subsubsection{Voting phase}
+
+During the second step, the voters use their credentials to connect to the web interface maintained by the election server. Then they select their vote which is encrypted by their own computer, sign it and send it to the server. 
+
+\subsubsection{Tally phase}
+
+During the third step, and in the default configuration, the election server keeps the decryption key. To insure the privacy and the universal verifiability of the votes, while still being able to announce the result of the election, Belenios uses a very clever mathematical trick: It uses a property called homomorphism. This allows any person to compute the \textbf{encrypted} result of the the election from the encrypted ballots. Then, the decryption key can be used to decrypt the results.
+ 
+\subsection{Belenios source code}
+
+The source code of Belenios is written in Ocaml, a language that was mostly developed by the teams of the INRIA . Since I never studied it, I alas, could not understand much of it.\\ 
+
+To create a clean install of Belenios I first tried to install it on a virtual machine. I encountered a difficulty. Indeed, it seems the 1.10 release of Belenios I was trying to install could not resolve certain dependencies.\\
+
+Finally, I installed the gitlab version of Belenios on a Debian 10 stable Jessie by cloning it and was finally able to try it. To test the system, I used the scripts and Makefile contained in the software.
+
+
+
+\section{More on cryptographic protocols}
+
+Before studying Belenios, I had to learn some concepts and a few tools necessary to understand, at least at a basic level, the use and the functionning of cryptograhpic protocols. 
+
+\subsection{Modelling}
+
+To model cryptographic protocols we use a wide variety of formal tools.
+Cryptographic primitives, modeled by an equational theory are used to represent most of the operations such as encryption, decryption, signature and so on.
+
+On the top of that, we also use applied Pi calculus, which is a process algebra, allowing us to describe the protocol we want as a concurrent system in which several entities interact. An interesting thing is that pi calculus is very similar to the way we represent things in the Promela language for model-checking. 
+
+\subsection{A few more properties}
+
+Besides the properties we already saw in Belenios, I had the occasion to learn a few more, namely:
+
+\begin{itemize}
+\item \textbf{Authentification:} That is the act of proving an assertion. In Belenios, we saw it when the voter needed to use his credentials to prove he was who he was.
+
+\item \textbf{Identification:} The act of indicating one's identity. 
+
+\item \textbf{Secrecy:} This property is a bit harder to explain since I found several definitions of the term depending on the context. In general, secrecy refers to the practice of hiding information to non-authorized recipients. However, during my researches, I also learnt about forward secrecy (see below.)
+
+\item \textbf{Forward secrecy:} Forward secrecy refers to key agreement protocols (that is protocol where several entities agree on cryptographic keys to communicate.) An encryption system ensures forward secrecy if, during the key agreement phase, the examination of plain-text data exchange does not reveal the key that was used to encrypt the remainder of the session.
+
+\end{itemize}
+
+\section{Addendum: Problems related to the internship organisation}
 
 \section{Conclusion}
 
