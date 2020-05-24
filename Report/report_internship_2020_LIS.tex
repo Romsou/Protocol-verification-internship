@@ -24,7 +24,7 @@
 \setitemize{font=\color{SeaGreen}}
 
 % Définition des marges (paquets geometry)
-\geometry{margin=2.5cm, vmargin=2.5cm}
+%\geometry{margin=2.5cm, vmargin=2.5cm}
 
 % Définition de l'indentation
 \setlength{\parindent}{0cm}
@@ -39,7 +39,8 @@
 
 \begin{document}
 \maketitle
-
+\tableofcontents
+\newpage
 \section{Introduction}
 
 The present document is an internship report redacted during my last undergraduate year at the university of aix-Marseille from april to june 2020.\\ 
@@ -223,7 +224,7 @@ Finally, I installed the gitlab version of Belenios on a Debian 10 stable Jessie
 
 \section{More on cryptographic protocols}
 
-Before studying Belenios, I had to learn some concepts and a few tools necessary to understand, at least at a basic level, the use and the functionning of cryptograhpic protocols. 
+Before studying Belenios, I had to learn some concepts and a few tools necessary to understand, at least at a basic level, the use and the functionning of cryptographic protocols. 
 
 \subsection{Modelling}
 
@@ -237,9 +238,10 @@ On the top of that, we also use applied Pi calculus, which is a process algebra,
 Besides the properties we already saw in Belenios, I had the occasion to learn a few more, namely:
 
 \begin{itemize}
-\item \textbf{Authentification:} That is the act of proving an assertion. In Belenios, we saw it when the voter needed to use his credentials to prove he was who he was.
 
 \item \textbf{Identification:} The act of indicating one's identity. 
+
+\item \textbf{Authentification:} That is the act of proving an assertion. In Belenios, we saw it when the voter needed to use his credentials to prove he was who he was.
 
 \item \textbf{Secrecy:} This property is a bit harder to explain since I found several definitions of the term depending on the context. In general, secrecy refers to the practice of hiding information to non-authorized recipients. However, during my researches, I also learnt about forward secrecy (see below.)
 
@@ -247,11 +249,46 @@ Besides the properties we already saw in Belenios, I had the occasion to learn a
 
 \end{itemize}
 
-\section{Addendum: Problems related to the internship organisation}
+\subsection{Belenios and the administration of a university election}
+
+To conclude on Belenios and to answer the question I was asked over the course of this internship, I would say that considering the stakes of a university level election or vote, Belenios would be suited for the task. The system has already been used in such occasions successfully.\\ 
+
+In the case of a vote from teachers The guarantee of privacy and strong verifiability met by Belenios would allow for example, the teacher to vote while reducing the risks of corruption and complicity since only the result of the vote could be decrypted and no one would be able to know how they voted (Keep in mind however that Belenios does not prevent coercion.). The verifiability property of the system would also allow the member of the university to check the result of the election all the while keeping the content of the vote secret. The same would be achieved in the case of an election.\\
+
+\textbf{However}, I would strongly advise against using Belenios for large stake elections or vote \textbf{or} to administer a vote or an election including tech-savyy students (and potentially teachers). The same is advised by the research team, since no electronic voting system is currently able to achieve the same level of security as a traditionnal paper one. 
+
+
+\section{Difficulties encountered}
+
+Over the course of the internship, I encoutered a few difficulties, namely:
+
+\begin{itemize}
+\item The installation of belenios which took me several days because of an unsolvable dependency problem in the 1.10 release.
+\item The lack of mathematical prerequisites which made my study of the research paper much harder.
+\item The use of oCaml basically prevented me to study or debug the source code of Belenios. The only thing I could actually understand were the Makefile and the shell scripts.
+\item The wide number of research papers took me a while to go through to know exactly which part was interesting to review and which part were not.
+\end{itemize}
 
 \section{Conclusion}
 
-Coming...
+In conclusion, I learrnt many things over the course of this intership, despite the many problems encountered and the short time I had left to work. I have mostly learnt the existence, and partly the use (but not the mastery) of several mathematical tools such as process algebras, like the pi calculus, the equational theories, several cryptographic properties such as privacy and verifiability, and the first steps of a research work. I also had the occasion to get acquainted with the ocaml language and the tools surrounding it, especially opam, the package manager, which I found very interesting and efficient in its syntax. I also learnt more about voting protocols, their functionning, their use, and the stakes behind their development. 
+
+Considering my intention to pursue a researcher career in the field of security and / or Artificial Intelligence, this internship was a good first introduction to the problems related to research
+
+\section{Addendum: Problems related to the internship organisation}
+
+During the realization of the internship, a lot of problems arised that prevented me to produce what I consider a proper work. The confinement, first, caused by the Covid-19 crisis forced us to stay at home while working remotely, making the support for the work harder. The work environment was far from ideal as well, considering my fammily situation.\\ 
+
+The upholding of the exams in the middle of the internship made things even worse considering the chaos in which it was organised. From the April 30th to May 19th, we had to work on the internship while also reviewing for the exams (5 TD for each subject more the rendering of the network program with the redaction of the report.).\\
+
+The administration tasks also slowed us down, since it required some time to procude CV, letters and the papers necessary to candidate to this university or others.
+
+Out of the five weeks first intended for the internship, I would say only two of them could be properly exploited.\\
+
+Considering all these problems, I had to think about a few ways to improve this work. Hence, with more time, this work could have used a bit more polish to eliminate innacuracies. I could have also proposed a real research work by attempting to reproduce the proof system created by the team of Belenios in EasyCrypt. I could have also widen my studies to the use of cryptographic protocols in general. If Dr.Lugiez agrees, I intend to work a bit longer on this topic as an introduction to research.
+ 
+
+
 
 \section{bibliography}
 
